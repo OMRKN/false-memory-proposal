@@ -1,0 +1,65 @@
+x=1:10
+sbj=sprintf("subject %d",x)
+
+cont=sprintf("control %d",x)
+
+subject_withnumber = c(sbj,sbj,cont,cont)
+subject = c(rep("subject",20),rep("control",20))
+group = c(rep("FPM",10),rep("NFPM",10),rep("FPM",10),rep("NFPM",10))
+FPM_subject = rnorm(10,0.15,0.1)
+NFPM_subject = rnorm(10,0.88,0.1)
+FPM_control = rnorm(10,0.67,0.1)
+NFPM_control = rnorm(10,0.15,0.1)
+discount_rate = c(FPM_subject,NFPM_subject,
+                  FPM_control,NFPM_control)
+datatable = data.frame(subject, subject_withnumber, group, discount_rate)
+datatable
+
+library(dplyr)
+library(ggplot2)
+dt2 = datatable %>%
+  group_by(group, subject) %>%
+  summarise(mean_k = mean(discount_rate),
+            sem = sd(discount_rate)/sqrt(n()))
+
+ggplot(dt2, aes(group, mean_k))+
+  geom_bar(stat = 'identity')+
+  facet_wrap(~subject) +
+  geom_errorbar(aes(ymin=mean_k-sem, ymax=mean_k+sem),width=0.4)
+
+datatable %>%
+  group_by(group, subject) %>%
+  summarise(mean_k = mean(discount_rate), sem=sd(discount_rate/sqrt(n()))) %>%
+  mutate(x_axis = paste(group, subject, sep = '_')) %>%
+  ggplot(aes(x_axis, mean_k))+
+  geom_errorbar(aes(ymin=mean_k-sem, ymax=mean_k+sem),width=0.4) +
+  geom_bar(stat = 'identity') +
+  xlab("group and subject") + ylab("mean log(k)")
+
+ cor.test(NFPM_subject, FPM_control)
+
+ datatable %>%
+  ggplot(aes(group,discount_rate))+
+  geom_point()+
+  geom_smooth(method="lm") +
+  ylab("log(k)")
+
+  ggplot(datatable, aes(group, discount_rate))+
+  geom_boxplot()+
+  facet_wrap(~subject) +
+  ylab("log(k)")
+
+  summary(aov(discount_rate ~ group, datatable))
+
+  datatable %>%
+  ggplot(aes(discount_rate, fill=subject, col=subject))+
+  geom_density(alpha=0.5) +
+  xlab("log(k)")
+
+  datatable %>%
+  ggplot(aes(discount_rate, group, color=subject))+
+  geom_point()+
+  geom_smooth(method = "lm") +
+  xlab("log(k)")
+
+  summary(lm(discount_rate ~ group+subject, datatable))
