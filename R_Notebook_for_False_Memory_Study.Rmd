@@ -30,7 +30,7 @@ discount_rate = c(FPM_subject,NFPM_subject,
 datatable = data.frame(subject, subject_withnumber, group, discount_rate)
 datatable
 ```
-#Bar Plots
+# Bar Plots
 ```{r}
 library(dplyr)
 library(ggplot2)
@@ -54,7 +54,7 @@ datatable %>%
   xlab("group and subject") + ylab("mean log(k)")
 ```
 
-#Linear Correlation
+# Linear Correlation
 ```{r}
 cor.test(NFPM_subject, FPM_control)
 ```
@@ -75,7 +75,7 @@ ggplot(datatable, aes(group, discount_rate))+
   ylab("log(k)")
 ```
 
-#ANOVA
+# ANOVA
 ```{r}
 summary(aov(discount_rate ~ group, datatable))
 ```
@@ -86,7 +86,7 @@ datatable %>%
   xlab("log(k)")
 ```
 
-#Linear Regression
+# Linear Regression
 ```{r}
 datatable %>%
   ggplot(aes(discount_rate, group, color=subject))+
