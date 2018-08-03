@@ -1,9 +1,6 @@
 ---
 title: "R Notebook for False Memory Study Proposal"
-output:
-  html_document:
-    toc: true
-    toc_float: true
+output: html_notebook
 ---
 
 # Creating the Datatable
@@ -94,6 +91,7 @@ datatable %>%
   geom_smooth(method = "lm") +
   xlab("log(k)")
 ```
+
 ```{r}
 summary(lm(discount_rate ~ group+subject, datatable))
 ```
