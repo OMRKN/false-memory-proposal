@@ -68,7 +68,7 @@ datatable %>%
   ylab("log(k)")
 ```
 
-# T-test
+# T-test used on a Box Plot
 ```{r}
 ggplot(datatable, aes(group, discount_rate))+
   geom_boxplot()+
@@ -76,7 +76,7 @@ ggplot(datatable, aes(group, discount_rate))+
   ylab("log(k)")
 ```
 
-# ANOVA
+# ANOVA used on a Density Plot
 ```{r}
 summary(aov(discount_rate ~ group, datatable))
 ```
