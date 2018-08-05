@@ -1,6 +1,10 @@
 ---
 title: "R Notebook for False Memory Study Proposal"
-output: html_notebook
+output:
+  html_notebook:
+    toc: true
+    toc_float: true
+    code_folding: hide
 ---
 
 # Creating the Datatable
